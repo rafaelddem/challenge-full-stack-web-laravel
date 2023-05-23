@@ -23,8 +23,8 @@ class StudentRequest extends FormRequest
     {
         return [
             'name' => 'required|max:50', 
-            'cpf' => 'required|integer', 
-            'email' => 'required|email:rfc,dns|max:50', 
+            'cpf' => 'required|integer|unique:students', 
+            'email' => 'required|email:rfc,dns|max:50|unique:students', 
         ];
     }
 }
