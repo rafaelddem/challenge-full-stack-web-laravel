@@ -15,13 +15,43 @@ class StudentController extends Controller
     */
     public function list()
     {
+        $filter = "";
+
+        if (request('search')) 
+            $filter = request('search');
+
         $students = Student::query()
             ->select()
-            ->orderBy('ra', 'asc')
+            ->where('name', 'like', $filter . '%')
+            ->orderBy('name', 'asc')
             ->get();
 
         return response(['results' => $students], 200);
     }
+
+    // public function list()
+    // {
+    //     $search = request('search');
+
+    //     $students = Student::query()
+    //         ->select();
+
+    //     if ($search) {
+    //         if (is_numeric($search)) {
+    //             $students
+    //                 ->where('ra', '=', $search)
+    //                 ->orWhere('ra', '=', $search);
+    //         } else {
+    //             $students
+    //                 ->where('name', 'like', '%' . $search . '%')
+    //                 ->orWhere('name', 'like', '%' . $search . '%');
+    //         }
+    //     }
+
+    //     $students = $students->get();
+
+    //     return response(['results' => $students], 200);
+    // }
 
     public function store(StudentRequest $request)
     {
