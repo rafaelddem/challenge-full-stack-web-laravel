@@ -33,7 +33,7 @@ class StudentController extends Controller
             $student->save();
 
             $message = 'Record successfully saved';
-            return response(['response' => $message], 200);
+            return response(['response' => $message], 201);
         } catch (\Throwable $th) {
             $message = 'Internal Server Error';
             return response(['response' => $message], 500);
@@ -46,7 +46,7 @@ class StudentController extends Controller
             $student = Student::query()->find($id);
 
             if (empty($student)) 
-                return response(['response' => 'Record not found'], 200);
+                return response(['response' => 'Record not found'], 204);
             
             return response(['response' => $student], 200);
         } catch (\Throwable $th) {
@@ -59,6 +59,10 @@ class StudentController extends Controller
     {
         try {
             $student = Student::query()->find($id);
+
+            if (empty($student)) 
+                return response(['response' => 'Record not found'], 204);
+
             $student->name = $request->name;
             $student->email = $request->email;
             $student->update();
@@ -78,12 +82,14 @@ class StudentController extends Controller
 
             if (!empty($student)) {
                 $student->delete();
+
                 $message = 'Record successfully deleted';
+                return response(['response' => $message], 202);
             } else {
                 $message = 'Record not found';
+                return response(['response' => $message], 204);
             }
 
-            return response(['response' => $message], 200);
         } catch (\Throwable $th) {
             $message = 'Internal Server Error';
             return response(['response' => $message], 500);
