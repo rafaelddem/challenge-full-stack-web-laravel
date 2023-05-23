@@ -25,4 +25,20 @@ class StudentController extends Controller
         }
     }
 
+    public function update(StudentRequest $request, int $id)
+    {
+        try {
+            $student = Student::query()->find($id);
+            $student->name = $request->name;
+            $student->email = $request->email;
+            $student->update();
+
+            $message = 'Record successfully updated';
+            return response(['response' => $message], 200);
+        } catch (\Throwable $th) {
+            $message = 'Internal Server Error';
+            return response(['response' => $message], 500);
+        }
+    }
+
 }
