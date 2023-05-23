@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\OutroController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+// Route::get('/token', function () {
+//     return csrf_token(); 
+// });
+
+Route::prefix('/student')->group(function () {
+    Route::post('/new', [StudentController::class, 'store']);
 });

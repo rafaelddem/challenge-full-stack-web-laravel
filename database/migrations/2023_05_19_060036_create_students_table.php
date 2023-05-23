@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('students', function (Blueprint $table) {
-            $table->integer('ra')->primary();
+            $table->increments('ra');
             $table->string('name', 50);
             $table->string('email', 50);
-            $table->integer('cpf');
+            $table->bigInteger('cpf');
         });
     }
 
